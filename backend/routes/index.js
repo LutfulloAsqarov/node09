@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/api/blogs", [auth, adminMiddleware], BlogsController.get);
 router.post("/api/blogs", [auth, ownerMiddleware], BlogsController.create);
 router.delete("/api/blogs/:id", [auth], BlogsController.delete);
-router.put("/api/blogs/:id", [auth], BlogsController.update);
+router.patch("/api/blogs/:id", [auth], BlogsController.update);
 
 router.get("/api/profile", [auth], UsersController.getProfile);
 router.get("/api/users", UsersController.getAllUsers);

@@ -26,9 +26,9 @@ export const blogApi = api.injectEndpoints({
             invalidatesTags: ["Blog"],
         }),
         updateBlog: build.mutation({
-            query: (id, body) => ({
+            query: ({ id, body }) => ({
                 url: `/blogs/${id}`,
-                method: "PUT",
+                method: "PATCH",
                 body,
             }),
             invalidatesTags: ["Blog"],

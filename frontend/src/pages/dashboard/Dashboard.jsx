@@ -14,10 +14,13 @@ import {
 import { Button, Layout, Menu, theme } from "antd";
 // import Blogs from "../blogs/Blogs";
 import { Link, Outlet } from "react-router-dom";
+import { useGetProfileQuery } from "../../context/api/userApi";
 const { Header, Sider, Content } = Layout;
 
 const Dashboard = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const { data } = useGetProfileQuery();
+    console.log(data);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -64,6 +67,7 @@ const Dashboard = () => {
                         padding: 0,
                         background: colorBgContainer,
                     }}
+                    className="flex"
                 >
                     <Button
                         type="text"
@@ -81,6 +85,7 @@ const Dashboard = () => {
                             height: 64,
                         }}
                     />
+                    <h2 className="text-[22px]">{data?.payload?.fname}</h2>
                 </Header>
                 <Outlet
                     style={{
