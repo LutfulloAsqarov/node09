@@ -31,6 +31,14 @@ export const userApi = api.injectEndpoints({
             }),
             invalidatesTags: ["User"],
         }),
+        updateUser: build.mutation({
+            query: ({ id, body }) => ({
+                url: `/users/${id}`,
+                method: "PATCH",
+                body,
+            }),
+            invalidatesTags: ["User"],
+        }),
     }),
 });
 
@@ -39,4 +47,5 @@ export const {
     useGetProfileQuery,
     useRegisterUserMutation,
     useSignInMutation,
+    useUpdateUserMutation,
 } = userApi;

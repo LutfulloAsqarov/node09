@@ -13,53 +13,85 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 // import Blogs from "../blogs/Blogs";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useGetProfileQuery } from "../../context/api/userApi";
 const { Header, Sider, Content } = Layout;
 
 const Dashboard = () => {
     const [collapsed, setCollapsed] = useState(false);
     const { data } = useGetProfileQuery();
-    console.log(data);
+    let navigate = useNavigate();
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+    const handleLogOut = () => {
+        localStorage.removeItem("x-auth-token");
+        navigate("/login");
+    };
+
+    let isOwner = data?.payload?.role === "owner";
+
+    const menuItems = [
+        {
+            key: "1",
+            icon: (
+                <Link to={"createBlog"}>
+                    <UserOutlined />
+                </Link>
+            ),
+            label: "Create blog",
+        },
+        {
+            key: "2",
+            icon: (
+                <Link to={"manageBlogs"}>
+                    <VideoCameraOutlined />
+                </Link>
+            ),
+            label: "Manage blog",
+        },
+    ];
+
+    if (isOwner) {
+        menuItems.push(
+            {
+                key: "3",
+                icon: (
+                    <Link to={"createUser"}>
+                        <UserOutlined />
+                    </Link>
+                ),
+                label: "Create User",
+            },
+            {
+                key: "4",
+                icon: (
+                    <Link to={"manageUser"}>
+                        <VideoCameraOutlined />
+                    </Link>
+                ),
+                label: "Manage User",
+            }
+        );
+    }
+
     return (
-        <Layout
-            // style={{
-            //     minHeight: "100vh",
-            // }}
-            className="min-h-screen"
-        >
+        <Layout className="min-h-screen">
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                {/* <div className="demo-logo-vertical" /> */}
-                <div className="demo-logo-vertical">asdf</div>
                 <Menu
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={["1"]}
-                    // className="w-[400px]"
-                    items={[
-                        {
-                            key: "1",
-                            icon: (
-                                <Link to={"createBlog"}>
-                                    <UserOutlined />
-                                </Link>
-                            ),
-                            label: "Create blog",
-                        },
-                        {
-                            key: "2",
-                            icon: (
-                                <Link to={"manageBlogs"}>
-                                    <VideoCameraOutlined />
-                                </Link>
-                            ),
-                            label: "Manage blog",
-                        },
-                    ]}
+                    items={menuItems}
                 />
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="w-full"
+                    onClick={handleLogOut}
+                >
+                    Log out
+                </Button>
             </Sider>
             <Layout>
                 <Header

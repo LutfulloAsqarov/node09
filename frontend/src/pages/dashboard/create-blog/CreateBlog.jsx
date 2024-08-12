@@ -6,10 +6,6 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useCreateBlogMutation } from "../../../context/api/blogApi";
 
 const CreateBlog = () => {
-    // const [signIn, { data, isSuccess, error }] = useSignInMutation();
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
-
     const [createBlog, { data }] = useCreateBlogMutation();
 
     const handleSubmit = (values) => {
@@ -38,6 +34,7 @@ const CreateBlog = () => {
                     name="title"
                     rules={[
                         {
+                            required: true,
                             message: "Please input blog title!",
                         },
                     ]}
@@ -50,6 +47,7 @@ const CreateBlog = () => {
                     name="desc"
                     rules={[
                         {
+                            required: true,
                             message: "Please input blog desc!",
                         },
                     ]}

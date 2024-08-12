@@ -32,7 +32,8 @@ const SignIn = () => {
                 layout="vertical"
                 className="w-96 max-sm:w-full"
                 initialValues={{
-                    remember: true,
+                    username: "lut32",
+                    password: "12345678",
                 }}
                 onFinish={handleSubmit}
                 onFinishFailed={onFinishFailed}
